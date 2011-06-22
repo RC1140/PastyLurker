@@ -6,7 +6,7 @@
         "author": "RC1140",
         "private": true,
         "dependencies": {
-            "mongoose": ">= 0.0.0",
+            "mongoose": ">= 1.4.0",
             "scraper": ">= 0.0.0"
         },
         "engines": { "node": ">= 0.4.5" }
