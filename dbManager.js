@@ -4,7 +4,8 @@ var config = require('./settings');
 var dbManager = {}
 
 var initCon = function(){
-    db = mongoose.connect(config.mongoserver);
+console.log(config.mongoserver);
+    db = mongoose.connect('mongodb://localhost/scrapie');
     mongoose.connection.on('open',function(){
             console.log('DB Connection Opened !!!');
     });
