@@ -1,0 +1,13 @@
+{
+    "name": "jiraiya",
+        "description": "The pastebin watcher",
+        "version": "0.0.1",
+        "homepage": "http://runawaycoder.co.za",
+        "author": "RC1140",
+        "private": true,
+        "dependencies": {
+            "mongoose": ">= 0.0.0",
+            "scraoer": ">= 0.0.0"
+        },
+        "engines": { "node": ">= 0.4.5" }
+}
