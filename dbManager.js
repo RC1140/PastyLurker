@@ -13,15 +13,29 @@ console.log(config.mongoserver);
 
 var Schema = mongoose.Schema;
 
-var scrapes = new Schema({
-      url : String,
-      checked : Boolean
+var scrapeMetaInfo = new Schema({
+      title     : String,
+      expires   : String,
+      size      : String,
+      syntax    : String,
+      user      : String
 });
 
-var scrapesBase = mongoose.model('scrapes',scrapes);
-var scrapesModel = mongoose.model('scrapes');
 
-//dbManager.scrapesBase = scrapesBase;
+var scrapes = new Schema({
+      url       : String,
+      fileData  : String,
+      checked   : Boolean,
+      metaInfo  : [scrapeMetaInfo],
+      captureDate: { type: Date, default: Date.now }
+});
+
+mongoose.model('scrapes',scrapes);
+mongoose.model('scrapesMeta',scrapeMetaInfo );
+var scrapesModel = mongoose.model('scrapes');
+var scrapesMetaInfoModel = mongoose.model('scrapesMeta');
+
 dbManager.scrapesModel = scrapesModel;
+dbManager.scrapesMetaModel = scrapesMetaInfoModel;
 
 module.exports = dbManager;
