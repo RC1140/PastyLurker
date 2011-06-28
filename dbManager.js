@@ -23,7 +23,7 @@ var scrapeMetaInfo = new Schema({
 
 
 var scrapes = new Schema({
-      url       : String,
+      url       : {type:String, index: {unique: true}},
       fileData  : String,
       checked   : Boolean,
       metaInfo  : [scrapeMetaInfo],
