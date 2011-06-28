@@ -1,13 +1,13 @@
 var scraper = require('scraper');
 var dbMan = require('./dbManager');
-var loader = require('./loader');
+var loader = require('./fileScraper');
 var urlScraper = {};
 
 urlScraper.continuousScrape = false;
 
 var scrapeArchive = function(continuosScrape){
     if(continuousScrape){
-        urlScraper.continuousScrape = continuousScrape); 
+        urlScraper.continuousScrape = continuousScrape; 
     };
     scraper('http://pastebin.com/archive/', function(err, jQuery) {
         if (err) {throw err}

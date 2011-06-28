@@ -30,12 +30,24 @@ var scrapes = new Schema({
       captureDate: { type: Date, default: Date.now }
 });
 
+var scrapeWatch = new Schema({
+      watchString : String,
+      email : String,
+      notifoUserName : String,
+      twitterhandle : String
+});
+
+
 mongoose.model('scrapes',scrapes);
 mongoose.model('scrapesMeta',scrapeMetaInfo );
+mongoose.model('scrapeWatch',scrapeWatch);
+
 var scrapesModel = mongoose.model('scrapes');
 var scrapesMetaInfoModel = mongoose.model('scrapesMeta');
+var scrapeWatchModel = mongoose.model('scrapeWatch');
 
 dbManager.scrapesModel = scrapesModel;
 dbManager.scrapesMetaModel = scrapesMetaInfoModel;
+dbManager.scrapeWatchModel = scrapeWatchModel;
 
 module.exports = dbManager;

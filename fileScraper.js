@@ -21,6 +21,7 @@ var scrapeURL = function(){
                 }
                 scrape.checked = true;
                 scrape.fileData = body;
+                dataChecker(body);
                 scrape.save(function(err){
                     if(err){
                         console.log(err);
@@ -46,6 +47,18 @@ var scrapeURL = function(){
     });
 };
 
+var dataChecker = function(data){
+    dbMan.scrapeWatchModel.find({},function(err,watches){
+        if(watches){
+            watches.forEach(function(watch){
+                 var re = new RegExp(watch.watchString,'gi'); 
+                 if(data.match(re)){
+                      console.log('match found'); 
+                 };
+            });
+        };        
+    });
+};
 //starts a delayed scrape , by default after 30 seconds , will only scrape a single url
 var delayedScraper = function(scrapeMultiple){
     if(scrapeMultiple){
