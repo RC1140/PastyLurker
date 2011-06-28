@@ -11,11 +11,8 @@ var client = new irc.Client(config.IRC.server, config.IRC.nick, {
     channels: [config.IRC.channel],
 });
 
-client.addListener('registered', function () {
-});
-
-client.addListener('pm', function (from, to, message) {
-      if(message.indexOf('addwatch') == 0){
+client.addListener('pm', function (from,message) {
+      if(message.toLowerCase().indexOf('addwatch') == 0){
             var splitParams = message.split('');
             var watchType = splitParams[1];
             splitParams.splice(0.2);
@@ -38,11 +35,11 @@ client.addListener('pm', function (from, to, message) {
                    process.exit();
             });
             client.say(from,'Your watch has been saved , when a paste matching your message is found you will be notified');
-      }else if(message.indexOf('registernotifo') == 0){
+      }else if(message.toLowerCase().indexOf('registernotifo') == 0){
             myNotifo.subscribeUser({ username: from });
             myNotifo.sendNotification({ to: from, msg: 'Hey this is just a welcome message' });
             client.say(from,'You have been registered and a test notification sent'); 
-      }else if(message.indexOf('help') == 0){
+      }else if(message.toLowerCase().indexOf('help') == 0){
             client.say(from,'The following commands are available.'); 
             client.say(from,'[+] addwatch (note your current irc handle will be used for irc and notifo messages)'); 
             client.say(from,'[-] e.g. addwatch irc lulzsec'); 
