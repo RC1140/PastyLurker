@@ -5,7 +5,7 @@ var urlScraper = {};
 
 urlScraper.continuousScrape = false;
 
-var scrapeArchive = function(continuousScrape){
+var scrapeArchive = function(continuousScrape,ircClient){
     if(continuousScrape){
         urlScraper.continuousScrape = continuousScrape; 
     };

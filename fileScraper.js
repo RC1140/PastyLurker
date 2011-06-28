@@ -47,7 +47,7 @@ var scrapeURL = function(){
                         delayedScraper();
                         return;
                     }else{
-                        process.exit();
+                        //process.exit();
                     };
                 });
                 
@@ -67,13 +67,13 @@ var dataChecker = function(data,url){
                       if(watch.notifoUserName){
                           myNotifo.sendNotification({ to: watch.notifoUserName, msg: 'Hey this url '+url+' matches your watch '+watch.watchString });
                       };
-                      if(watch.twitterHandle){
-                            twit.verifyCredentials(function (data) {
-                                sys.puts(sys.inspect(data));
-                            }).updateStatus('@'+watch.twitterHandle+' a url matching your watch found @ '+url,function (data) {
-                                sys.puts(sys.inspect(data));
-                            });
-                      };
+                      //if(watch.twitterHandle){
+                            //twit.verifyCredentials(function (data) {
+                                //sys.puts(sys.inspect(data));
+                            //}).updateStatus('@'+watch.twitterHandle+' a url matching your watch found @ '+url,function (data) {
+                                //sys.puts(sys.inspect(data));
+                            //});
+                      //};
                       console.log('match found'); 
                  };
             });
@@ -82,9 +82,9 @@ var dataChecker = function(data,url){
 };
 
 //starts a delayed scrape , by default after 30 seconds , will only scrape a single url
-var delayedScraper = function(scrapeMultiple){
+var delayedScraper = function(scrapeMultiple,ircClient){
     if(scrapeMultiple){
-        scapeMore = scrapeMultiple;
+        scrapeMore = scrapeMultiple;
     };
     timerID = setTimeout(scrapeURL,30000);
 };

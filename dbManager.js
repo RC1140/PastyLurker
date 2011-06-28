@@ -34,7 +34,7 @@ var scrapeWatch = new Schema({
       watchString : String,
       email : String,
       notifoUserName : String,
-      twitterhandle : String
+      ircHandle : String
 });
 
 
