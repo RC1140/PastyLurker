@@ -9,6 +9,9 @@
             "mongoose": ">= 1.4.0",
             "scraper": ">= 0.0.0",
             "scraper": ">= 1.9.8"
+            "notifo": ">= 0.0.2"
+            "twitter": ">= 0.1.17"
+            "cookies": ">= 0.1.6"
         },
         "engines": { "node": ">= 0.4.5" }
 }

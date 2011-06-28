@@ -5,7 +5,7 @@ var urlScraper = {};
 
 urlScraper.continuousScrape = false;
 
-var scrapeArchive = function(continuosScrape){
+var scrapeArchive = function(continuousScrape){
     if(continuousScrape){
         urlScraper.continuousScrape = continuousScrape; 
     };
@@ -16,7 +16,7 @@ var scrapeArchive = function(continuosScrape){
         });
         console.log('scraping complete');
     });
-    if(url.continuousScrape){
+    if(urlScraper.continuousScrape){
         setTimeout(scrapeArchive,60000);
     };
 };
