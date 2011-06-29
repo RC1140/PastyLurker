@@ -1,0 +1,16 @@
+{
+    "name": "pastie",
+        "description": "The pastebin watcher",
+        "version": "0.1.5",
+        "homepage": "http://runawaycoder.co.za",
+        "author": "RC1140",
+        "private": true,
+        "dependencies": {
+            "mongoose": ">= 1.4.0",
+            "scraper": ">= 0.0.9",
+            "irc": ">= 0.2.0",
+            "optimist": ">= 0.2.5",
+            "twitter": ">= 0.1.7"
+        },
+        "engines": { "node": ">= 0.4.5" }
+}
