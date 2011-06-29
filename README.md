@@ -11,15 +11,15 @@ notify you if anything in the watch triggers.
 ## Requirements:
 * * *
 
-1) node
-2) npm
-3) mongo
+- node
+- npm
+- mongo
 
 Setup:
 
-1) npm install
-2) Extract node-nofio-1.1.tgz to node_modules/
-3) Update the settings file and fill in all blank options
+- npm install
+- Extract node-nofio-1.1.tgz to node_modules/
+- Update the settings file and fill in all blank options
 
 Note : The twitterTokenGenerator.js has its own requirements.
 run the following commands if you want to use the twitter intergration.
