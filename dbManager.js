@@ -38,17 +38,24 @@ var scrapeWatch = new Schema({
       twitterHandle: String
 });
 
+var webUsers = new Schema({
+      username : String,
+      password : String
+});
 
 mongoose.model('scrapes',scrapes);
 mongoose.model('scrapesMeta',scrapeMetaInfo );
 mongoose.model('scrapeWatch',scrapeWatch);
+mongoose.model('webUsers',webUsers);
 
 var scrapesModel = mongoose.model('scrapes');
 var scrapesMetaInfoModel = mongoose.model('scrapesMeta');
 var scrapeWatchModel = mongoose.model('scrapeWatch');
+var webUsersModel = mongoose.model('webUsers');
 
 dbManager.scrapesModel = scrapesModel;
 dbManager.scrapesMetaModel = scrapesMetaInfoModel;
 dbManager.scrapeWatchModel = scrapeWatchModel;
+dbManager.webUsersModel = webUsersModel;
 
 module.exports = dbManager;
