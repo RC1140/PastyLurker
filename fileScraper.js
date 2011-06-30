@@ -70,7 +70,7 @@ var dataChecker = function(data,url){
                       };
                       if(watch.ircHandle){
                           if(scraper.ircClient){
-                              scraper.ircClient.say(watch.ircHandle, 'Hey this url '+url+' matches your watch '+watch.watchString });
+                              scraper.ircClient.say(watch.ircHandle, 'Hey this url '+url+' matches your watch '+watch.watchString );
                           };
                       };
                       if(watch.twitterHandle){
