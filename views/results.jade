@@ -1,0 +1,12 @@
+div(id='info' ,class='trebuchet')
+    p #{title}
+div(id='details' ,class='monospace selection')
+    p Urls found matching your params
+    ul
+    - each f in list
+        li
+           a(href='http://pastebin.com/#{f.url}')
+                #{f.url}
+    br
+    a(href='/')
+       span Back to search
