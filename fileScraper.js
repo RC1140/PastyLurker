@@ -6,9 +6,10 @@ var settings = require('./settings');
 var twitter = require('twitter');
 var notifo = require('node-notifo');
 var myNotifo = new notifo(settings.notifoUser,settings.notifoKey);
-
 var timerID;
-var scrapeMore = false;
+var scraper = {};
+scraper.scrapeMore = false;
+scraper.ircClient = {};
 var twit = new twitter({
     consumer_key: settings.twitter.consumer_key,
     consumer_secret: settings.twitter.consumer_secret,
@@ -25,8 +26,8 @@ var scrapeURL = function(){
             request({ uri:'http://pastebin.com/raw.php?i='+fileName }, function (error, response, body) {
                 if (error && response.statusCode !== 200) {
                   console.log(error);
-                  if(scrapeMore){
-                      delayedScraper();
+                  if(scraper.scrapeMore){
+                      delayedScraper(scraper.scrapeMore,scraper.ircClient);
                   };
                 }
                 scrape.checked = true;
@@ -35,16 +36,16 @@ var scrapeURL = function(){
                 scrape.save(function(err){
                     if(err){
                         console.log(err);
-                        if(scrapeMore){
-                            delayedScraper();
+                        if(scraper.scrapeMore){
+                            delayedScraper(scraper.scrapeMore,scraper.ircClient);
                             return;
                         };
                         return;
                     };
                     console.log('[-] Scraping complete ');
-                    if(scrapeMore){
+                    if(scraper.scrapeMore){
                         console.log('[-] Starting next scrape in 30 seconds');
-                        delayedScraper();
+                        delayedScraper(scraper.scrapeMore,scraper.ircClient);
                         return;
                     }else{
                         //process.exit();
@@ -67,13 +68,18 @@ var dataChecker = function(data,url){
                       if(watch.notifoUserName){
                           myNotifo.sendNotification({ to: watch.notifoUserName, msg: 'Hey this url '+url+' matches your watch '+watch.watchString });
                       };
-                      //if(watch.twitterHandle){
-                            //twit.verifyCredentials(function (data) {
-                                //sys.puts(sys.inspect(data));
-                            //}).updateStatus('@'+watch.twitterHandle+' a url matching your watch found @ '+url,function (data) {
-                                //sys.puts(sys.inspect(data));
-                            //});
-                      //};
+                      if(watch.ircHandle){
+                          if(scraper.ircClient){
+                              scraper.ircClient.say(watch.ircHandle, 'Hey this url '+url+' matches your watch '+watch.watchString });
+                          };
+                      };
+                      if(watch.twitterHandle){
+                            twit.verifyCredentials(function (data) {
+                                //sys.puts(sys.inspect(data)); //Use this for debugging
+                            }).updateStatus('@'+watch.twitterHandle+' a url matching your watch '+watch.watchString+' was found @ '+url,function (data) {
+                                //sys.puts(sys.inspect(data)); //Use this for debugging
+                            });
+                      };
                       console.log('match found'); 
                  };
             });
@@ -83,13 +89,13 @@ var dataChecker = function(data,url){
 
 //starts a delayed scrape , by default after 30 seconds , will only scrape a single url
 var delayedScraper = function(scrapeMultiple,ircClient){
+    scraper.ircClient = ircClient;
     if(scrapeMultiple){
-        scrapeMore = scrapeMultiple;
+        scraper.scrapeMore = scrapeMultiple;
     };
     timerID = setTimeout(scrapeURL,30000);
 };
 
-var scraper = {};
 scraper.scrapeURL = scrapeURL;
 scraper.delayedScraper = delayedScraper;
 

@@ -1,17 +1,15 @@
 {
     "name": "jiraiya",
         "description": "The pastebin watcher",
-        "version": "0.0.1",
+        "version": "0.1.5",
         "homepage": "http://runawaycoder.co.za",
         "author": "RC1140",
         "private": true,
         "dependencies": {
             "mongoose": ">= 1.4.0",
-            "scraper": ">= 0.0.0",
-            "scraper": ">= 1.9.8"
-            "notifo": ">= 0.0.2"
-            "twitter": ">= 0.1.17"
-            "cookies": ">= 0.1.6"
+            "scraper": ">= 0.0.9",
+            "irc": ">= 0.2.0",
+            "optimist": ">= 0.2.5"
         },
         "engines": { "node": ">= 0.4.5" }
 }

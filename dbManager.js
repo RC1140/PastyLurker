@@ -5,7 +5,7 @@ var dbManager = {}
 
 var initCon = function(){
 console.log(config.mongoserver);
-    db = mongoose.connect('mongodb://localhost/scrapie');
+    db = mongoose.connect(config.mongoserver);
     mongoose.connection.on('open',function(){
             console.log('DB Connection Opened !!!');
     });
@@ -34,7 +34,8 @@ var scrapeWatch = new Schema({
       watchString : String,
       email : String,
       notifoUserName : String,
-      ircHandle : String
+      ircHandle : String,
+      twitterHandle: String
 });
 
 
