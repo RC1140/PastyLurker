@@ -24,8 +24,9 @@ html
     div.holder
         div(id='info',class='trebuchet')
             p #{title} #{session.username}
-        a(href='/stats') 
-             div(id='stats',style='width:100px;') Stats
-        a(href='/')
-            div(id='search',style='width:100px;') Search
+
+        div(id='stats',style='width:100px;')
+            a(href='/stats') Stats
+        div(id='search',style='width:100px;')
+            a(href='/') Search
         != body
