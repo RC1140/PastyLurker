@@ -1,17 +1,31 @@
-!!!
 html
   head
     title= title
-    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js')
+    script(src='/jquery-1.6.1.min.js')
+    script(src='/jquery-ui.min.js')
+    link(type='text/css',href='/css/Aristo/jquery-ui-1.8.7.custom.css', rel='stylesheet')
+    script
+        $(function(){
+            $("#stats").button();
+            $("#search").button();
+            console.log('test');
+        });
     style
         body{background-color:#222;}
         #selector{ float:left;}
-        #info{ font-size: 32px; color:#000;text-shadow:#444 1px 1px 2px; text-align:right;margin:20px 10px;text-transform:lowercase;}
-        #details{ clear:both; border: 1px solid #444; overflow-x:hidden; overflow-y:auto; background-color:#333; color: #EEE; text-shadow:#000 0 0 2px; height: 400px; padding: 10px; font-size:12px; line-height:20px;}
+        #info{ font-size: 32px; color:#99FF66;text-shadow:#444 1px 1px 2px; text-align:right;margin:20px 10px;text-transform:lowercase;}
+        #details{ clear:both; border: 1px solid #444; overflow-x:hidden; overflow-y:auto; background-color:#333; color: #99FF66; text-shadow:#000 0 0 2px; height: 400px; padding: 10px; font-size:12px; line-height:20px;}
+        a {color:#FFFFFF}
         .trebuchet{font-family: "Trebuchet MS","Lucida Sans Unicode","Lucida Grande","Lucida Sans",Arial,sans-serif;}
         .monospace{font-family: Monaco,"Bitstream Vera Sans Mono","Lucida Console",Terminal,monospace;}
         .selection::selection , .selection *::selection{background: #EEE;color:#000;border-color:#000; text-shadow:#fff 0 0 2px;}
         .selection::-moz-selection , .selection *::-moz-selection{background: #EEE;color:#000;border-color:#000; text-shadow:#fff 0 0 2px;}
   body
     div.holder
+        div(id='info',class='trebuchet')
+            p #{title} #{session.username}
+        div(id='stats',style='width:100px;') 
+            a(href='/stats') Stats
+        div(id='search',style='width:100px;') 
+            a(href='/') Search
         != body

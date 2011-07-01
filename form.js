@@ -3,9 +3,12 @@ var express = require('express');
 var settings = require('./settings');
 var dbMan = require('./dbManager');
 var app = module.exports = express.createServer();
+var bcrypt = require('bcrypt');  
+var salt = bcrypt.gen_salt_sync(10);  
 
 app.configure(function(){
     app.set('views', __dirname + '/views');
+    app.use(express.static(__dirname + '/public'));
     app.set('view engine', 'jade');
     app.use(express.bodyParser());
     app.use(express.cookieParser());
@@ -29,15 +32,41 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
+app.get('/login', function(req, res){
+    res.render('login', {
+        title: 'Please login below'
+    });
+});
+
+app.get('/stats', function(req, res){
+    dbMan.scrapesModel.find({}).count(function(err1,count){
+        dbMan.scrapesModel.find({'checked':true}).count(function(err,countdeep){
+            res.render('stats', {
+                    title: 'Current App Stats',
+                    scraped : countdeep ,
+                    urls: count,
+                    diff : count - countdeep 
+            });        
+        });        
+    });
+});
+
+
 app.post('/login', function(req, res){
     if(req.body.username){
-        req.session.authed = true; 
-        req.session.username = req.body.username; 
-        res.redirect('/');
-        return;
+        dbMan.webUsersModel.findOne({'username':req.body.username},function(err,currentUser){
+            if(err){
+                console.log(err); 
+                return;
+            };
+            req.session.authed = bcrypt.compare_sync(req.body.password, currentUser.password); 
+            req.session.username = req.body.username; 
+            res.redirect('/');    
+            return;
+        });
     }else{
         res.render('login', {
-            title: 'Pasty Lurker'
+            title: 'Please login below'
         });
     };
 });
@@ -45,7 +74,7 @@ app.post('/login', function(req, res){
 app.get('/', function(req, res){
     if(req.session.authed){
         res.render('index', {
-            title: 'Pasty Lurker'
+            title: 'Welcome to Pasty Lurker'
         });
     }else{
         res.redirect('/login'); 
@@ -64,13 +93,6 @@ app.post('/', function(req, res){
     });
     
 });
-
-app.get('/login', function(req, res){
-    res.render('login', {
-        title: 'Pasty Lurker'
-    });
-});
-
 
 app.listen(3000,'127.0.0.1');
 console.log("Express server listening on port %d",app.address().port);

@@ -12,7 +12,8 @@
             "optimist": ">= 0.2.5",
             "request": ">= 1.9.8",
             "twitter": ">= 0.1.17",
-            "connect-mongo": ">= 0.1.4"
+            "connect-mongo": ">= 0.1.4",
+            "connect-mongo": ">= 0.2.3"
         },
         "engines": { "node": ">= 0.4.5" }
 }
