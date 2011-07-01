@@ -53,7 +53,7 @@ app.get('/', function(req, res){
 });
 
 app.post('/', function(req, res){
-    dbMan.scrapesModel.find({'fileData':new RegExp(req.body.searchdata)},function(err,docs){
+    dbMan.scrapesModel.find({'fileData':new RegExp(req.body.searchdata,"gi")},function(err,docs){
         if(err){
            return;
         }
@@ -72,5 +72,5 @@ app.get('/login', function(req, res){
 });
 
 
-app.listen(3000,'0.0.0.0');
+app.listen(3000,'127.0.0.1');
 console.log("Express server listening on port %d",app.address().port);
