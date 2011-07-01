@@ -9,7 +9,10 @@
             "mongoose": ">= 1.4.0",
             "scraper": ">= 0.0.9",
             "irc": ">= 0.2.0",
-            "optimist": ">= 0.2.5"
+            "optimist": ">= 0.2.5",
+            "request": ">= 1.9.8",
+            "twitter": ">= 0.1.17",
+            "connect-mongo": ">= 0.1.4"
         },
         "engines": { "node": ">= 0.4.5" }
 }

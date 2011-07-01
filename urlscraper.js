@@ -1,7 +1,9 @@
 var scraper = require('scraper');
 var dbMan = require('./dbManager');
 var loader = require('./fileScraper');
+var request = require('request');
 var urlScraper = {};
+var $ = require('jquery');
 
 urlScraper.continuousScrape = false;
 
@@ -9,16 +11,18 @@ var scrapeArchive = function(continuousScrape,ircClient){
     if(continuousScrape){
         urlScraper.continuousScrape = continuousScrape; 
     };
-    scraper('http://pastebin.com/archive/', function(err, jQuery) {
-        if (err) {throw err}
-        jQuery('.g').each(function(index) {
-            scrapeUrl(jQuery,this);
+    request({ uri:'http://pastebin.com/archive' }, function (error, response, body) {
+        if (error && response.statusCode !== 200) {
+          console.log(error);
+        }
+        $('.g',body).each(function(index) {
+            scrapeUrl($,this);
         });
         console.log('scraping complete');
+        if(urlScraper.continuousScrape){
+            setTimeout(scrapeArchive,60000);
+        };
     });
-    if(urlScraper.continuousScrape){
-        setTimeout(scrapeArchive,60000);
-    };
 };
 
 var scrapeUrl = function(jQuery,rowFragment){
@@ -30,11 +34,11 @@ var scrapeUrl = function(jQuery,rowFragment){
     var user = jQuery(jQuery('td',rowFragment)[5]);
     var scrapeURL =  jQuery('a',title).attr('href').substring(1);
     
-    console.log('[-] Title : '+title.html());
-    console.log('[-] Expires : '+expires.html());
-    console.log('[-] Size : '+size.html());
-    console.log('[-] Syntax : '+syntax.html());
-    console.log('[-] User : '+user.html());    
+    //console.log('[-] Title : '+title.html());
+    //console.log('[-] Expires : '+expires.html());
+    //console.log('[-] Size : '+size.html());
+    //console.log('[-] Syntax : '+syntax.html());
+    //console.log('[-] User : '+user.html());    
 
     var scrapeMetaInfo = new dbMan.scrapesMetaModel();
     scrapeMetaInfo.title    = title.text();
