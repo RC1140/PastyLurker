@@ -31,16 +31,18 @@ var scrapes = new Schema({
 });
 
 var scrapeWatch = new Schema({
-      watchString : String,
-      email : String,
-      notifoUserName : String,
-      ircHandle : String,
-      twitterHandle: String
+      watchString       : String,
+      active            : Boolean,
+      user              : [webUsers]
 });
 
 var webUsers = new Schema({
-      username : String,
-      password : String
+      username          : String,
+      password          : String,
+      email             : String,
+      notifoUserName    : String,
+      ircHandle         : String,
+      twitterHandle     : String
 });
 
 mongoose.model('scrapes',scrapes);

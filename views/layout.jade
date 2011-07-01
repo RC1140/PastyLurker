@@ -14,7 +14,7 @@ html
         body{background-color:#222;}
         #selector{ float:left;}
         #info{ font-size: 32px; color:#99FF66;text-shadow:#444 1px 1px 2px; text-align:right;margin:20px 10px;text-transform:lowercase;}
-        #details{ clear:both; border: 1px solid #444; overflow-x:hidden; overflow-y:auto; background-color:#333; color: #99FF66; text-shadow:#000 0 0 2px; height: 400px; padding: 10px; font-size:12px; line-height:20px;}
+        #details{ clear:both; border: 1px solid #444; overflow-x:hidden; overflow-y:auto; background-color:#333; color: #99FF66; height: 400px; padding: 10px; font-size:12px; line-height:20px;}
         a {color:#FFFFFF}
         .trebuchet{font-family: "Trebuchet MS","Lucida Sans Unicode","Lucida Grande","Lucida Sans",Arial,sans-serif;}
         .monospace{font-family: Monaco,"Bitstream Vera Sans Mono","Lucida Console",Terminal,monospace;}
@@ -24,8 +24,8 @@ html
     div.holder
         div(id='info',class='trebuchet')
             p #{title} #{session.username}
-        div(id='stats',style='width:100px;') 
-            a(href='/stats') Stats
-        div(id='search',style='width:100px;') 
-            a(href='/') Search
+        a(href='/stats') 
+             div(id='stats',style='width:100px;') Stats
+        a(href='/')
+            div(id='search',style='width:100px;') Search
         != body

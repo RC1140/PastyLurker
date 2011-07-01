@@ -38,19 +38,6 @@ app.get('/login', function(req, res){
     });
 });
 
-app.get('/stats', function(req, res){
-    dbMan.scrapesModel.find({}).count(function(err1,count){
-        dbMan.scrapesModel.find({'checked':true}).count(function(err,countdeep){
-            res.render('stats', {
-                    title: 'Current App Stats',
-                    scraped : countdeep ,
-                    urls: count,
-                    diff : count - countdeep 
-            });        
-        });        
-    });
-});
-
 
 app.post('/login', function(req, res){
     if(req.body.username){
@@ -81,6 +68,26 @@ app.get('/', function(req, res){
     };
 });
 
+app.get('/watches', function(req, res){
+    if(req.session.authed){
+        res.render('index', {
+            title: 'watches'
+        });
+    }else{
+        res.redirect('/login'); 
+    };
+});
+
+app.get('/admin', function(req, res){
+    if(req.session.authed){
+        res.render('index', {
+            title: 'admin'
+        });
+    }else{
+        res.redirect('/login'); 
+    };
+});
+
 app.post('/', function(req, res){
     dbMan.scrapesModel.find({'fileData':new RegExp(req.body.searchdata,"gi")},function(err,docs){
         if(err){
@@ -93,6 +100,20 @@ app.post('/', function(req, res){
     });
     
 });
+
+app.get('/stats', function(req, res){
+    dbMan.scrapesModel.find({}).count(function(err1,count){
+        dbMan.scrapesModel.find({'checked':true}).count(function(err,countdeep){
+            res.render('stats', {
+                    title: 'Current App Stats',
+                    scraped : countdeep ,
+                    urls: count,
+                    diff : count - countdeep 
+            });        
+        });        
+    });
+});
+
 
 app.listen(3000,'127.0.0.1');
 console.log("Express server listening on port %d",app.address().port);

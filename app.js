@@ -6,5 +6,5 @@ var ircMan = require('./ircManager');
 var formMan = require('./form');
 
 //Startup continuous scraping of files and urls
-urlScraper.scrapeArchive(true,ircMan.client);
+//urlScraper.scrapeArchive(true,ircMan.client);
 fileScraper.delayedScraper(true,ircMan.client);
