@@ -1,4 +1,6 @@
 var dbMan = require('./dbManager')
+var dnode = require('dnode');
+
 var scrapeURL = function(){
     dbMan.scrapesModel.findOne({'checked':false},function(err,scrape){
         console.log('[+] Starting scrape for :'+scrape.url);
@@ -21,14 +23,17 @@ var scrapeURL = function(){
                         return;
                     };
                     console.log('[-] Scraping complete ');
-                    if(scraper.scrapeMore){
-                        console.log('[-] Starting next scrape in 30 seconds');
-                        setTimeout(scraper.scrapeMore,5000);
-                        return;
-                    };
+                    console.log('[-] Starting next scrape in 30 seconds');
+                    setTimeout(scrapeURL,5000);
+                    return;
                 });
                 
             });
         };
     });
-}();
+};
+
+dnode.connect(5050, function (remote) {
+     scrapeURL();
+});
+

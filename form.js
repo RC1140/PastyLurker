@@ -5,6 +5,9 @@ var dbMan = require('./dbManager');
 var app = module.exports = express.createServer();
 var bcrypt = require('bcrypt');  
 var salt = bcrypt.gen_salt_sync(10);  
+var io = require('socket.io').listen(app);
+
+var dnode = require('dnode');
 
 app.configure(function(){
     app.set('views', __dirname + '/views');
@@ -184,6 +187,53 @@ app.get('/stats', function(req, res){
     });
 });
 
-
 app.listen(3000,'127.0.0.1');
+io.sockets.on('connection', function (socket) {
+      console.log('client connected');
+      socket.emit('news', { hello: 'world' });
+      //socket.on('news', function (data) {
+          //console.log(data);
+      //});
+});
+
+// Callback expects the following param , url : this is the url to scrape 
+var getNextURLToScrape = function(callback){
+    dbMan.scrapesModel.findOne({'checked':false},function(err,scrape){
+        if(scrape){
+             callback(scrape.url);
+        }else{
+             callback(null);
+        };
+    });
+};
+
+var updateScrape = function(url,data,callback){
+    dbMan.scrapesModel.findOne({'checked':false,'url':url},function(err,scrape){
+        if(scrape){
+            scrape.checked = true;
+            scrape.fileData = data;
+            scrape.save(function(err){
+                if(err){
+                    console.log(err);
+                    callback(null);
+                    return;
+                };
+                callback('Thanks for the update');
+                //console.log('[-] Scraping complete ');
+            });
+        }else{
+             callback(null);
+        };
+    });
+};
+
+var server = dnode({
+        updateScrape : updateScrape,
+        getNextURLToScrape : getNextURLToScrape,
+        ping : function(){
+        
+        }
+});
+server.listen(5050);
+
 console.log("Express server listening on port %d",app.address().port);
