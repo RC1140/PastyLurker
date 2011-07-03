@@ -8,6 +8,7 @@ html
         $(function(){
             $("#stats").button();
             $("#search").button();
+            $("#watches").button();
             console.log('test');
         });
     style
@@ -29,4 +30,6 @@ html
             a(href='/stats') Stats
         div(id='search',style='width:100px;')
             a(href='/') Search
+        div(id='watches',style='width:100px;')
+            a(href='/watches') Watches
         != body

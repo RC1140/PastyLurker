@@ -1,4 +1,4 @@
-var scraper = require('scraper');
+var settings = require('./settings');
 var dbMan = require('./dbManager');
 var loader = require('./fileScraper');
 var request = require('request');
@@ -20,7 +20,7 @@ var scrapeArchive = function(continuousScrape,ircClient){
         });
         console.log('scraping complete');
         if(urlScraper.continuousScrape){
-            setTimeout(scrapeArchive,60000);
+            setTimeout(scrapeArchive,settings.urlScanPause);
         };
     });
 };

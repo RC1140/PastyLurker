@@ -32,6 +32,16 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
+var renderWatches = function(res,username){
+    dbMan.scrapeWatchModel.find({'user.username':username},function(err,watches){
+        res.render('watches', {
+            title: 'watches',
+            watches: watches
+        });    
+    });
+};
+
+
 app.get('/login', function(req, res){
     res.render('login', {
         title: 'Please login below'
@@ -70,8 +80,68 @@ app.get('/', function(req, res){
 
 app.get('/watches', function(req, res){
     if(req.session.authed){
-        res.render('index', {
+        dbMan.scrapeWatchModel.find({'user.username':req.session.username},function(err,watches){
+            res.render('watches', {
+                title: 'watches',
+                watches: watches
+            });    
+        });
+    }else{
+        res.redirect('/login'); 
+    };
+});
+
+app.get('/deleteWatch/:watchID', function(req, res){
+    if(req.session.authed){
+        dbMan.scrapeWatchModel.find({'user.username':req.session.username},function(err,watches){
+            watches.forEach(function(watch){
+                if(watch.id == req.params.watchID){
+                    watch.remove(); 
+                    renderWatches(res,req.session.username);
+                };    
+            }); 
+        });
+    }else{
+        res.redirect('/login'); 
+    };
+});
+
+app.get('/toggleWatch/:watchID', function(req, res){
+    if(req.session.authed){
+        dbMan.scrapeWatchModel.find({'user.username':req.session.username},function(err,watches){
+            watches.forEach(function(watch){
+                if(watch.id == req.params.watchID){
+                    watch.active = !watch.active; 
+                    watch.save(function(){
+                        renderWatches(res,req.session.username);  
+                    });
+                };    
+            }); 
+        });
+    }else{
+        res.redirect('/login'); 
+    };
+});
+
+app.get('/addWatch', function(req, res){
+    if(req.session.authed){
+        res.render('watches/newWatch', {
             title: 'watches'
+        });
+    }else{
+        res.redirect('/login'); 
+    };
+});
+
+app.post('/addWatch', function(req, res){
+    if(req.session.authed){
+        dbMan.webUsersModel.findOne({'username':req.session.username},function(err,user){
+            var newWatch = new dbMan.scrapeWatchModel(); 
+            newWatch.watchString = req.body.watchstring;
+            newWatch.active = true;
+            newWatch.user.push(user);
+            newWatch.save();
+            renderWatches(res,req.session.username);  
         });
     }else{
         res.redirect('/login'); 
