@@ -162,7 +162,7 @@ app.get('/admin', function(req, res){
 });
 
 app.post('/', function(req, res){
-    dbMan.scrapesModel.find({'fileData':new RegExp(req.body.searchdata,"gi")},function(err,docs){
+    dbMan.scrapesModel.find({'fileData':new RegExp(req.body.searchdata,"gi")},[],{'limit':10},function(err,docs){
         if(err){
            return;
         }

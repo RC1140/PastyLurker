@@ -51,12 +51,12 @@ var appSettings = new Schema({
       twitter_consumer_key      : String,
       twitter_consumer_secret   : String,
       twitter_access_token_key  : String,
-      twitter_access_token_secret: String
-      IRC_channel               : String
-      IRC_server                : String
-      IRC_nick                  : String
-      IRC.realName              : String
-      IRC.userName              : String
+      twitter_access_token_secret: String,
+      IRC_channel               : String,
+      IRC_server                : String,
+      IRC_nick                  : String,
+      IRC_realName              : String,
+      IRC_userName              : String
 });
 
 config.urlScanPause = 120000;
