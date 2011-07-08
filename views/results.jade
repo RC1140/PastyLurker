@@ -1,0 +1,23 @@
+script
+    $(function() {
+            $( ".accordion" ).accordion({
+                collapsible: true,
+                active:false
+            });
+    });
+div(id='details' ,class='monospace selection')
+    p Urls found matching your params
+    ul
+    - each f in list
+        li
+           a(href='http://pastebin.com/#{f.url}')
+                #{f.url}
+           div(class='accordion')
+               h3 
+                   a(href='#') Paste Detail 
+               div
+                   p #{f.fileData}
+
+    br
+    a(href='/')
+       span Back to search

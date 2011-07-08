@@ -1,0 +1,20 @@
+div(id='details' ,class='monospace selection')
+    a(href='/addWatch') Add New Watch
+    br
+    style
+        td { width:200px;color: #99FF66;}
+        th { text-align:left;color:white}
+    table
+        tr
+            th WatchString
+            th Active 
+            th Action
+        - each f in watches 
+            tr
+                td #{f.watchString}
+                td #{f.active}
+                td 
+                   a(href='/deleteWatch/#{f.id}') Delete
+                   br
+                   a(href='/toggleWatch/#{f.id}') Toggle Watch 
+

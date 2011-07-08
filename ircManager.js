@@ -1,9 +1,6 @@
-var urlScraper = require('./urlscraper');
-var fileScraper = require('./fileScraper');
-var dbMan = require('./dbManager');
-<<<<<<< HEAD
 var irc = require('irc');
 var config = require('./settings');
+var dbMan = require('./dbManager');
 
 var client = new irc.Client(config.IRC.server, config.IRC.nick, {
     userName : config.IRC.userName,
@@ -52,15 +49,4 @@ client.addListener('pm', function (from,message) {
       };
 });
 
-//Startup continuous scraping of files and urls
-urlScraper.scrapeArchive(true,client);
-fileScraper.delayedScraper(true,client);
-=======
-var config = require('./settings');
-var ircMan = require('./ircManager');
-var formMan = require('./form');
-
-//Startup continuous scraping of files and urls
-urlScraper.scrapeArchive(true,ircMan.client);
-fileScraper.delayedScraper(true,ircMan.client);
->>>>>>> 876b6d69f2a1d0d7dda99dbf1994559b7293aa38
+module.exports.client = client;
